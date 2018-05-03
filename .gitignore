@@ -1,0 +1,13 @@
+/backend-nodeJS/node_modules/
+/backend-nodeJS/server/config/config.json
+/backend-nodeJS/.idea/
+/backend-nodeJS/playground/
+
+/frontend-angularJS/node_modules/
+/frontend-angularJS/dist/
+/frontend-angularJS/.tmp/
+/frontend-angularJS/.sass-cache
+/frontend-angularJS/bower_components/
+/frontend-angularJS/.idea/
+
+/.idea

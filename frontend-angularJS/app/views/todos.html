@@ -1,0 +1,55 @@
+
+<div ng-init="filterForTask='';activeTab = 'all'">
+  <!-- Navigation Header -->
+  <div class="outer-container">
+    <div class="col-md-12">
+      <span class="pull-right primary-color" ng-click="logoutUser()">Logout</span>
+    </div>
+    <ul class="nav nav-tabs">
+      <li role="presentation" ng-class="activeTab==='all'?'active':''"><a href="javascript:void(0);" ng-click="activeTab = 'all';filterForTask=''" class="primary-color">All Tasks</a></li>
+      <li role="presentation" ng-class="activeTab==='pending'?'active':''"><a href="javascript:void(0);" ng-click="activeTab = 'pending';filterForTask=false" class="primary-color">Pending Tasks</a></li>
+      <li role="presentation" ng-class="activeTab==='completed'?'active':''"><a href="javascript:void(0);" ng-click="activeTab = 'completed';filterForTask=true" class="primary-color">Completed Tasks</a></li>
+    </ul>
+  </div>
+
+  <!-- All Tasks -->
+  <div class="outer-container">
+    <!-- Add New Task-->
+    <div class="row">
+      <div class="col-md-10 col-sm-10 col-xs-12 mt5">
+        <input type="text" ng-model="newTask" class="input-todo" placeholder="Add New Task..">
+      </div>
+      <div class="col-md-2 col-sm-2 col-xs-12 mt5">
+        <button type="button" class="btn btn-todo" ng-click="addTodo()" ng-disabled="newTask === ''">Add</button>
+      </div>
+    </div>
+
+    <!-- Iterate tasks -->
+    <div class="row card container col-md-12 margin0" ng-repeat="todo in user_todos | filter:{completed:filterForTask}">
+      <div class="card-inner" style="display:flex;flex-wrap:wrap">
+        <div class="col-md-6 col-sm-6 col-xs-12 margin-2">
+          <div class="todo-text">{{todo.text}}</div>
+          <span class="todo-date">Created At : {{todo.createdDate | date}}</span>
+          <div class="todo-date" ng-if="todo.completed !== false">Completed At: {{todo.completedAt | date}}</div>
+          <span class="label label-danger hidden-lg hidden-md hidden-sm pull-right" ng-if="todo.completed === false">Pending</span>
+          <span class="label label-success hidden-lg hidden-md hidden-sm pull-right" ng-if="todo.completed !== false">Completed</span>
+        </div>
+        <div class="col-md-6 col-sm-6 margin-2 hidden-xs">
+          <span class="pull-right complete mr-5" ng-if="todo.completed === false && activeTab!=='all'" ng-click="completeTodo(todo)"><i class="done-color material-icons">done</i></span>
+          <span class="pull-right delete mr-5" ng-if="activeTab!=='all'" ng-click="deleteTodo(todo)"><i class="done-color material-icons">delete</i></span>
+          <span class="label label-danger pull-right mt-2 mr-5" ng-if="todo.completed === false">Pending</span>
+          <span class="label label-success pull-right mt-2 mr-5" ng-if="todo.completed !== false">Completed</span>
+        </div>
+        <div class="hidden-lg hidden-md hidden-sm col-xs-12 text-center">
+          <span class="complete" ng-if="todo.completed === false && activeTab!=='all'" ng-click="completeTodo(todo)"><i class="done-color material-icons">done</i></span>
+          <span class="delete" ng-if="activeTab!=='all'" ng-click="deleteTodo(todo)"><i class="done-color material-icons">delete</i></span>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="user_todos.length === 0" class="no-task">
+      No tasks
+    </div>
+  </div>
+
+</div>
